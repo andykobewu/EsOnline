@@ -1,0 +1,26 @@
+.success {
+ background-color: #fff;
+ box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.13);
+ border-radius: 10px;
+ padding: 20px;
+}
+.success h4 {
+ font-family: "Montserrat", sans-serif;
+ font-size: 14px;
+ color: #202020;
+ font-weight: 600;
+ margin-left: 20px;
+ margin-top: 20px;
+}
+.success h4::after {
+ box-sizing: border-box;
+ display: block;
+ content: "";
+ height: 3px;
+ width: 46px;
+ background-color: #e6e6e6;
+ margin: 15px 0;
+}
+.right {
+ float: right;
+}

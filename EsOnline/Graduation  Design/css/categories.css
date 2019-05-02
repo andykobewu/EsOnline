@@ -1,0 +1,175 @@
+.categories {
+  position: relative;
+  border-radius: 10px;
+  background-color: #fff;
+  margin-bottom: 30px;
+  padding-top: 20px;
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.13);
+  padding-bottom: 20px
+}
+
+.categories .row{
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		justify-content: center
+}
+
+.categories .category{
+ position: relative;
+	border-right: 1px solid #e8e8e8;
+ border-bottom: 1px solid #e8e8e8;
+	width: 250px;
+ text-align: center
+}
+
+.categories .category img{
+	margin-top: 50px;
+	height: 63px;
+}
+
+.categories .category h5{
+	font-family: "Montserrat", sans-serif;
+	font-weight: 600;
+	color: #202020;
+	margin-top: 30px;
+	margin-bottom: 50px;
+}
+/* .categories .row:last-child::after{
+	content: "";
+	display: block;
+	width: 1px;
+	height: 100%;
+	background-color: #fff;
+	position: relative;
+	bottom: 1px;
+} */
+.categories::after{
+	content: "";
+	display: inline-block;
+	width: 1px;
+	height: 100%;
+	background-color: #fff;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+.categories .category .overlay{
+	background: url("http://placehold.it/311x227");
+ background-size: 100% 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 3;
+	opacity: 0;
+	box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.13); 
+	border-radius: 3px;
+}
+.categories .category .overlay p{
+	display: inline-block;
+	font-family: "Montserrat", sans-serif;
+	font-size: 11px;
+	color: #fff;
+}
+
+.categories .category .overlay p span{
+	font-family: "Montserrat", sans-serif;
+	font-weight: 600;
+	font-size: 36px;
+	color: #fff;
+	display: block;
+}
+
+.categories .category .overlay h5{
+	margin-top: 40px;
+	color: #fff;
+	margin-bottom: 22px;
+}
+
+.categories .category .overlay a{
+	font-family: "Montserrat", sans-serif;
+	font-size: 11px;
+	color: #fff;
+	text-decoration: none;
+	display: inline-block;
+}
+
+.categories .category .overlay a::after{
+	display: block;
+	content: "";
+	width: 0;
+	height: 2px;
+	background-color: rgba(255,255,255,0.6);
+	transition: width 0.5s ease;
+	margin: 0 auto;
+}
+
+.categories .category .overlay a:hover::after{
+	width: 100%;
+	transition: width 0.5s ease;
+}
+
+.categories .category:hover > .overlay{
+	transform: scale(1.1);
+ transition: all 0.5s ease;
+ opacity: 1;
+}
+
+.signup{
+ text-align: center;
+	background-size: cover;
+	background-position: center;
+	font-family: "Raleway", sans-serif;
+	font-weight: 600;
+	color: #00A080;
+	margin-top: 100px;
+}
+.signup p{
+ text-align: center;
+	font-size: 16px;
+	letter-spacing: 10px;
+	margin-top: 75px;
+}
+
+.signup h4{
+ text-align: center;
+	font-size: 53px;
+	margin-top: 15px;
+}
+
+.signup a{
+	font-family: "Montserrat", sans-serif;
+	font-size: 12px;
+	line-height: 44px;
+	width: 145px;
+	border-radius: 2px;
+	margin-top: 45px;
+	margin-bottom: 80px;
+}
+.bluebutton{
+	font-family: "Montserrat", sans-serif;
+	color: #fff;
+	font-size: 12px;
+	display: block;
+	margin: auto;
+	background-color: #12c8fc;
+	text-decoration: none;
+	transition: background-color 0.3s ease;
+}
+.bluebutton:hover{
+	background-color: #09a5c9;
+	transition: background-color 0.3s ease;
+	text-decoration: none;
+	color: #fff;
+}
+.name1 {
+	font-family: "Montserrat", sans-serif;
+ font-size: 30px;
+ color: #202020;
+ line-height: 80px;
+	margin-top: 1px;
+	text-align: center;
+ letter-spacing: 4px;
+}

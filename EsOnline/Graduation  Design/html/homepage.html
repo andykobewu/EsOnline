@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Es Online</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <!-- 引入样式 -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <!-- 引入组件库 -->
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <link rel="stylesheet" type="text/css" href="../css/homepage.css" />
+  <link rel="stylesheet" type="text/css" href="../css/lesson.css" />
+  <link rel="stylesheet" type="text/css" href="../css/video.css" />
+  <link rel="stylesheet" type="text/css" href="../css/categories.css" />
+  <link rel="stylesheet" type="text/css" href="../css/contact.css" />
+  <!-- <link rel="stylesheet" type="text/css" href="../lib/index.css" />
+  <script src="../lib/index.js"></script> -->
+</head>
+
+<body>
+  <div id="homepage">
+    <header>
+      <div class="temp1">
+        <el-row>
+          <el-col :span="5">
+            <div class="temp2">
+              <a href="#" title="首页">
+                <span>Es Online</span>
+              </a>
+            </div>
+          </el-col>
+          <el-col :span="5">
+            <div class="temp3">
+              <el-input v-model="input" class=".el-input__inner">
+                <el-button slot="append" icon="el-icon-search"></el-button>
+              </el-input>
+            </div>
+          </el-col>
+          <el-col :span="14">
+            <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#fff"
+              text-color="#888">
+              <el-menu-item index="1">
+                首页
+              </el-menu-item>
+              <el-menu-item index="2">
+                课程中心
+              </el-menu-item>
+              <el-menu-item index="3" class="menu">课程分类</el-menu-item>
+              <el-menu-item index="4">
+                <a href="#" target="_self" class="menu">联系我们</a>
+              </el-menu-item>
+              <el-menu-item index="5">
+                <a href="#" class="blueplay login">登录</a>
+              </el-menu-item>
+              <el-menu-item index="6">
+                <a href="#" class="register">马上注册</a>
+              </el-menu-item>
+            </el-menu>
+          </el-col>
+        </el-row>
+      </div>
+    </header>
+    <main v-if="contact">
+      <h2 class="name1" align="center">联系我们</h2>
+      <div class="success">
+        <h4>提交你的问题</h4>
+        <el-form :model="ruleForm" ref="refForm" label-width="100px">
+          <el-form-item label="用户名" required>
+            <el-input v-model="ruleForm.name" required></el-input>
+          </el-form-item>
+          <el-form-item label="邮箱地址" required>
+            <el-input v-model="ruleForm.address"></el-input>
+          </el-form-item>
+          <el-form-item label="课程链接" required>
+            <el-input v-model="ruleForm.website"></el-input>
+          </el-form-item>
+          <el-form-item label="课程类别" required>
+            <el-input v-model="ruleForm.subject"></el-input>
+          </el-form-item>
+          <el-form-item label="问题类别" required>
+            <el-checkbox-group v-model="ruleForm.type">
+              <el-checkbox label="无法观看" name="type"></el-checkbox>
+              <el-checkbox label="资源出错" name="type"></el-checkbox>
+              <el-checkbox label="卡顿" name="type"></el-checkbox>
+              <el-checkbox label="不清晰" name="type"></el-checkbox>
+            </el-checkbox-group>
+          </el-form-item>
+          <el-form-item label="问题描述" required>
+            <el-input type="textarea" v-model="ruleForm.desc"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <div class="right">
+              <el-button type="primary" @click="submitForm('refForm')">立即提交</el-button>
+              <el-button @click="resetForm('refForm')">重置</el-button>
+              <div>
+          </el-form-item>
+        </el-form>
+        </div>
+    </main>
+    <main v-if="categories">
+      <h2 class="name1" align="center">课程分类</h2>
+      <div class="categories">
+        <div class="row">
+          <div class="category">
+            <img src="http://placehold.it/55x63" alt="Category">
+            <h5>Business</h5>
+            <div class="overlay">
+              <p class="pull-right">
+                <span>93</span>TRAINERS</p>
+              <p class="pull-left">
+                <span>418</span>TUTORIALS</p>
+              <h5>Business</h5>
+              <a href="#">CHECK VIDEOS</a>
+            </div>
+          </div>
+          <div class="category">
+            <img src="http://placehold.it/55x63" alt="Category">
+            <h5>Business</h5>
+            <div class="overlay">
+              <p class="pull-right">
+                <span>94</span>TRAINERS</p>
+              <p class="pull-left">
+                <span>418</span>TUTORIALS</p>
+              <h5>Business</h5>
+              <a href="#">CHECK VIDEOS</a>
+            </div>
+          </div>
+          <div class="category">
+            <img src="http://placehold.it/55x63" alt="Category">
+            <h5>Business</h5>
+            <div class="overlay">
+              <p class="pull-right">
+                <span>94</span>TRAINERS</p>
+              <p class="pull-left">
+                <span>418</span>TUTORIALS</p>
+              <h5>Business</h5>
+              <a href="#">CHECK VIDEOS</a>
+            </div>
+          </div>
+          <div class="category">
+            <img src="http://placehold.it/55x63" alt="Category">
+            <h5>Business</h5>
+            <div class="overlay">
+              <p class="pull-right">
+                <span>94</span>TRAINERS</p>
+              <p class="pull-left">
+                <span>418</span>TUTORIALS</p>
+              <h5>Business</h5>
+              <a href="#">CHECK VIDEOS</a>
+            </div>
+          </div>
+          <div class="category">
+            <img src="http://placehold.it/55x63" alt="Category">
+            <h5>Business</h5>
+            <div class="overlay">
+              <p class="pull-right">
+                <span>94</span>TRAINERS</p>
+              <p class="pull-left">
+                <span>418</span>TUTORIALS</p>
+              <h5>Business</h5>
+              <a href="#">CHECK VIDEOS</a>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="category">
+            <img src="http://placehold.it/55x63" alt="Category">
+            <h5>Business</h5>
+            <div class="overlay">
+              <p class="pull-right">
+                <span>93</span>TRAINERS</p>
+              <p class="pull-left">
+                <span>418</span>TUTORIALS</p>
+              <h5>Business</h5>
+              <a href="#">CHECK VIDEOS</a>
+            </div>
+          </div>
+          <div class="category">
+            <img src="http://placehold.it/55x63" alt="Category">
+            <h5>Business</h5>
+            <div class="overlay">
+              <p class="pull-right">
+                <span>94</span>TRAINERS</p>
+              <p class="pull-left">
+                <span>418</span>TUTORIALS</p>
+              <h5>Business</h5>
+              <a href="#">CHECK VIDEOS</a>
+            </div>
+          </div>
+          <div class="category">
+            <img src="http://placehold.it/55x63" alt="Category">
+            <h5>Business</h5>
+            <div class="overlay">
+              <p class="pull-right">
+                <span>94</span>TRAINERS</p>
+              <p class="pull-left">
+                <span>418</span>TUTORIALS</p>
+              <h5>Business</h5>
+              <a href="#">CHECK VIDEOS</a>
+            </div>
+          </div>
+          <div class="category">
+            <img src="http://placehold.it/55x63" alt="Category">
+            <h5>Business</h5>
+            <div class="overlay">
+              <p class="pull-right">
+                <span>94</span>TRAINERS</p>
+              <p class="pull-left">
+                <span>418</span>TUTORIALS</p>
+              <h5>Business</h5>
+              <a href="#">CHECK VIDEOS</a>
+            </div>
+          </div>
+          <div class="category">
+            <img src="http://placehold.it/55x63" alt="Category">
+            <h5>Business</h5>
+            <div class="overlay">
+              <p class="pull-right">
+                <span>94</span>TRAINERS</p>
+              <p class="pull-left">
+                <span>418</span>TUTORIALS</p>
+              <h5>Business</h5>
+              <a href="#">CHECK VIDEOS</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="signup">
+        <p>ONLINE LEARNING FROM EVERYWHERE</p>
+        <h4>Are you ready to start learning?</h4>
+        <a href="#" class="bluebutton">SIGN UP TODAY</a>
+      </div>
+    </main>
+    <main v-if="video">
+      <h3>当前播放：视频名字</h3>
+      <div class="container">
+        <video :src="videosrc" controls height="450px">there is nothing</video>
+      </div>
+    </main>
+    <main v-if="search">
+      <div class="title">
+        <div class="name1">Es Search</div>
+        <div class="search">
+          <el-input placeholder="请输入查找内容" v-model="input" class=".el-input__inner">
+            <el-button slot="append" icon="el-icon-search"></el-button>
+          </el-input>
+        </div>
+      </div>
+
+      <div class="lesson">
+        <div id="fir">
+          <a class="first" href="#">最新</a>
+          <a href="#">最热</a>
+        </div>
+        <ul class="lessonul">
+          <li v-for="item in recommendList" :key="item.id" @click="videoClick(item.video)">
+            <a>
+              <div class="img1">
+                <img :src="item.src" class="image1" align="center" />
+                <p class="tit">{{item.tit}}</p>
+                <p class="desc">
+                  <span class="lessons">
+                    <i class="zmdi eye"></i>8 times</span>
+                  <span class="duration">
+                    <i class="zmdi"></i>4:32h</span>
+                </p>
+                <p class="desc">{{item.desc}}</p>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <div class="container pagecount">
+          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 100]"
+            :page-size="10" layout="total, sizes, prev, pager, next, jumper" :total="20">
+          </el-pagination>
+        </div>
+      </div>
+    </main>
+    <main v-if="home">
+      <el-row>
+        <el-col :span="4">
+          <div id="temp_ul">
+            <ul id="temp_list">
+              <li v-for="item in listContent" :key="item.id">
+                <span>{{item.content}}</span>
+                <i class="el-icon-caret-right"></i>
+                <div class="temp_show">
+                  <div class="temp4">
+                    <span class="text1">前沿技术</span>
+                    <div class="line"></div>
+                    <ul id="ul1">
+                      <li v-for="childitem in item.childContent1" :key="childitem.id">
+                        <a :href="childitem.href">{{childitem.content}}</a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="temp4">
+                    <ul>
+                      <li v-for="childitem in item.childContent2" :key="childitem.id"  @click="videoClick(childitem.video)">
+                        <div class="temp5">
+                          <img :src="childitem.src" />
+                          <a>
+                            <p>{{childitem.content}}</p>
+                            <p>{{childitem.grade}}</p>
+                          </a>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </el-col>
+        <el-col :span="20">
+          <el-carousel height="400px">
+            <el-carousel-item v-for="item in imgList" :key="item.id">
+              <a :href="item.href">
+                <img :src="item.src" />
+              </a>
+            </el-carousel-item>
+          </el-carousel>
+        </el-col>
+      </el-row>
+      <div class="course-system">
+        <h2 class="title2" align="center">多款课程体系，总有一款适合你</h2>
+        <h4 class="subtitle" align="center">
+          <span>
+            优质教育行业背景，专业研发团队， 针对不同学习需求，打造全面完善的课程体系
+          </span>
+        </h4>
+        <div align="center">
+          <img class="img-responsive" src="../img/imageBox/course_system.png" alt="" />
+        </div>
+      </div>
+      <div class="boxContain">
+        <h2 class="title2" align="center">学习流程</h2>
+        <h4 class="subtitle" align="center">
+          <span>仅需4步，轻松开启在线学习之旅</span>
+        </h4>
+        <div id='box_1'>
+          <img class="img-responsive" src="../img/imageBox/learning_process01.png">
+          <p>会员注册 / 登录</p>
+        </div>
+        <div id='box_2'>
+          <img class="img-responsive" src="../img/imageBox/learning_process02.png">
+          <p>购买相关课程</p>
+        </div>
+        <div id='box_3'>
+          <img class="img-responsive" src="../img/imageBox/learning_process03.png">
+          <p class="intercept">
+            自选教学/时间
+          </p>
+        </div>
+        <div id='box_4'>
+          <img class="img-responsive" src="../img/imageBox/learning_process04.png">
+          <p>电脑登录上课</p>
+        </div>
+      </div>
+      <el-row class="clear">
+        <el-col :span="18">
+          <div class="col1">
+            <h2 align="center">
+              <em>实</em>
+              <em>战</em>
+              <em>推</em>
+              <em>荐</em>
+            </h2>
+            <div class="recommend">
+              <ul>
+                <li v-for="item in recommendList" :key="item.id" @click="videoClick(item.video)">
+                  <a>
+                    <div class="img1">
+                      <img :src="item.src" class="image1" align="center" />
+                      <p class="tit">{{item.tit}}</p>
+                      <p class="desc">
+                        <span class="lessons">
+                          <i class="zmdi eye"></i>8 times</span>
+                        <span class="duration">
+                          <i class="zmdi"></i>4:32h</span>
+                      </p>
+                      <p class="desc">{{item.desc}}</p>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col1">
+            <h2 class="temp_h2" align="center">
+              <em>新</em>
+              <em>上</em>
+              <em>好</em>
+              <em>课</em>
+            </h2>
+            <div class="recommend">
+              <ul>
+                <li v-for="item in recommendList" :key="item.id" @click="videoClick(item.video)">
+                  <a>
+                    <div class="img1">
+                      <img :src="item.src" class="image1" align="center" />
+                      <p class="tit">{{item.tit}}</p>
+                      <p class="desc">
+                        <span class="lessons">
+                          <i class="zmdi eye"></i>8 times</span>
+                        <span class="duration">
+                          <i class="zmdi"></i>4:32h</span>
+                      </p>
+                      <p class="desc">{{item.desc}}</p>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </el-col>
+        <el-col :span="6">
+          <div class="col2">
+            <h2>
+              <em>热门课程</em>
+            </h2>
+            <ul>
+              <li v-for="item in lessonList" :key="item.id" @click="videoClick(item.video)">
+                <a>{{item.name}}</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col2">
+            <h2>
+              <em>精选课程</em>
+            </h2>
+            <ul>
+              <li v-for="item in lessonList" :key="item.id" @click="videoClick(item.video)">
+                <a>{{item.name}}</a>
+              </li>
+            </ul>
+          </div>
+        </el-col>
+      </el-row>
+    </main>
+    <footer style="clear: both;">
+      <div class="yu-loginBox">
+        <div class="login_first">
+          <span class="login_close">
+            <i></i>
+          </span>
+        </div>
+        <h1>用户登录</h1>
+        <ul>
+          <li>
+            <input class="yu-lbTxt" id="username" type="text" :value="values.username" placeholder="用户名" />
+            <i class="icon-user"></i>
+          </li>
+          <li>
+            <input class="yu-lbTxt" id="password" type="password" :value="values.password" placeholder="密码" @keyup.enter="loginFn" />
+            <i class="icon-lock"></i>
+          </li>
+          <li>
+            <input class="yu-lbBt" id="submitBtn" type="button" value="登　录" @click="loginFn" />
+          </li>
+          <li>
+            <span class="yu-loginMsg" id="msg">用户名或密码错误，请重新输入！</span>
+          </li>
+        </ul>
+      </div>
+      <div class="yu-loginBox">
+        <div class="login_first">
+          <span class="login_close">
+            <i></i>
+          </span>
+        </div>
+        <h1>用户注册</h1>
+        <ul>
+          <li>
+            <input class="yu-lbTxt" id="username1" type="text" :value="values.username" placeholder="用户名" />
+            <i class="icon-user"></i>
+          </li>
+          <li>
+            <input class="yu-lbTxt" id="password1" type="password" :value="values.password" placeholder="密码" @keyup.enter="registFn"
+            />
+            <i class="icon-lock"></i>
+          </li>
+          <li>
+            <input class="yu-lbBt" id="registBtn1" type="button" value="注　册" @click="registFn" />
+          </li>
+          <li>
+            <span class="yu-loginMsg" id="msg1">用户名已存在，请重新输入！</span>
+          </li>
+        </ul>
+      </div>
+      <!-- 遮罩层 -->
+      <div class="cover"></div>
+      <div class="footer1">
+        <p style="color: #C7C7C7;">
+          <span style="color: #556666;">Copyright 2019 &copy; Mine - Video Learning Platform | All Rights Reserved</p>
+        <p style="color:#556666;font: '微软雅黑';">四川省成都市新都区新都大道8号西南石油大学</p>
+        <p style="color:#C7C7C7;">电话：86-13340656997</p>
+        <!-- <p>Copyright 2019 &copy; Mine - Video Learning Platform | All Rights Reserved</p> -->
+      </div>
+    </footer>
+    </div>
+    <script src="../js/homepage.js"></script>
+</body>
+
+</html>
