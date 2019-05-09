@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
   <!-- 引入组件库 -->
   <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
   <link rel="stylesheet" type="text/css" href="../css/homepage.css" />
   <link rel="stylesheet" type="text/css" href="../css/lesson.css" />
   <link rel="stylesheet" type="text/css" href="../css/video.css" />
@@ -23,7 +24,7 @@
     <header>
       <div class="temp1">
         <el-row>
-          <el-col :span="5">
+          <el-col :span="4">
             <div class="temp2">
               <a href="#" title="首页">
                 <span>Es Online</span>
@@ -33,11 +34,11 @@
           <el-col :span="5">
             <div class="temp3">
               <el-input v-model="input" class=".el-input__inner">
-                <el-button slot="append" icon="el-icon-search"></el-button>
+                <el-button slot="append" icon="el-icon-search" @click="searchFn"></el-button>
               </el-input>
             </div>
           </el-col>
-          <el-col :span="14">
+          <el-col :span="15">
             <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#fff"
               text-color="#888">
               <el-menu-item index="1">
@@ -56,6 +57,15 @@
               <el-menu-item index="6">
                 <a href="#" class="register">马上注册</a>
               </el-menu-item>
+              <el-submenu index="7" v-show="isShow">
+                <template slot="title">
+                  <div class="model">
+                    <img src="../img/imageBox/ymz.png" />
+                  </div>
+                </template>
+                <el-menu-item index="7-1">个人信息</el-menu-item>
+                <el-menu-item index="7-2">登出</el-menu-item>
+              </el-submenu>
             </el-menu>
           </el-col>
         </el-row>
@@ -87,7 +97,7 @@
             </el-checkbox-group>
           </el-form-item>
           <el-form-item label="问题描述" required>
-            <el-input type="textarea" v-model="ruleForm.desc"></el-input>
+            <el-input type="textarea" v-model="ruleForm.description"></el-input>
           </el-form-item>
           <el-form-item>
             <div class="right">
@@ -230,11 +240,11 @@
       <div class="signup">
         <p>ONLINE LEARNING FROM EVERYWHERE</p>
         <h4>Are you ready to start learning?</h4>
-        <a href="#" class="bluebutton">SIGN UP TODAY</a>
+        <a href="#" class="bluebutton" @click="registShow">立即注册</a>
       </div>
     </main>
     <main v-if="video">
-      <h3>当前播放：视频名字</h3>
+      <h3>当前播放：{{videoName}}</h3>
       <div class="container">
         <video :src="videosrc" controls height="450px">there is nothing</video>
       </div>
@@ -244,7 +254,7 @@
         <div class="name1">Es Search</div>
         <div class="search">
           <el-input placeholder="请输入查找内容" v-model="input" class=".el-input__inner">
-            <el-button slot="append" icon="el-icon-search"></el-button>
+            <el-button slot="append" icon="el-icon-search" @click="searchFn"></el-button>
           </el-input>
         </div>
       </div>
@@ -255,16 +265,16 @@
           <a href="#">最热</a>
         </div>
         <ul class="lessonul">
-          <li v-for="item in recommendList" :key="item.id" @click="videoClick(item.video)">
+          <li v-for="item in allLesson" :key="item.id" @click="videoClick(item.video,item.times,index,item.id,item.tit)">
             <a>
               <div class="img1">
                 <img :src="item.src" class="image1" align="center" />
                 <p class="tit">{{item.tit}}</p>
                 <p class="desc">
                   <span class="lessons">
-                    <i class="zmdi eye"></i>8 times</span>
+                    <i class="zmdi eye"></i>{{item.times}} times</span>
                   <span class="duration">
-                    <i class="zmdi"></i>4:32h</span>
+                    <i class="zmdi"></i>{{item.hour}}h</span>
                 </p>
                 <p class="desc">{{item.desc}}</p>
               </div>
@@ -272,8 +282,8 @@
           </li>
         </ul>
         <div class="container pagecount">
-          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 100]"
-            :page-size="10" layout="total, sizes, prev, pager, next, jumper" :total="20">
+          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[1, 20, 50, 100]"
+            :page-size="pageconut" layout="total, sizes, prev, pager, next, jumper" :total="total">
           </el-pagination>
         </div>
       </div>
@@ -298,7 +308,7 @@
                   </div>
                   <div class="temp4">
                     <ul>
-                      <li v-for="childitem in item.childContent2" :key="childitem.id"  @click="videoClick(childitem.video)">
+                      <li v-for="childitem in item.childContent2" :key="childitem.id" @click="videoClick(childitem.video)">
                         <div class="temp5">
                           <img :src="childitem.src" />
                           <a>
@@ -346,7 +356,7 @@
         </div>
         <div id='box_2'>
           <img class="img-responsive" src="../img/imageBox/learning_process02.png">
-          <p>购买相关课程</p>
+          <p>查找相关课程</p>
         </div>
         <div id='box_3'>
           <img class="img-responsive" src="../img/imageBox/learning_process03.png">
@@ -370,16 +380,16 @@
             </h2>
             <div class="recommend">
               <ul>
-                <li v-for="item in recommendList" :key="item.id" @click="videoClick(item.video)">
+                <li v-for="(item, index) in recommendList" :key="item.id" @click="videoClick(item.video,item.times,index,item.id,item.tit)">
                   <a>
                     <div class="img1">
                       <img :src="item.src" class="image1" align="center" />
                       <p class="tit">{{item.tit}}</p>
                       <p class="desc">
                         <span class="lessons">
-                          <i class="zmdi eye"></i>8 times</span>
+                          <i class="zmdi eye"></i>{{item.times}} times</span>
                         <span class="duration">
-                          <i class="zmdi"></i>4:32h</span>
+                          <i class="zmdi"></i>{{item.hour}}h</span>
                       </p>
                       <p class="desc">{{item.desc}}</p>
                     </div>
@@ -397,16 +407,43 @@
             </h2>
             <div class="recommend">
               <ul>
-                <li v-for="item in recommendList" :key="item.id" @click="videoClick(item.video)">
+                <li v-for="item in recommendList" :key="item.id" @click="videoClick(item.video,item.times,index,item.id,item.tit)">
                   <a>
                     <div class="img1">
                       <img :src="item.src" class="image1" align="center" />
                       <p class="tit">{{item.tit}}</p>
                       <p class="desc">
                         <span class="lessons">
-                          <i class="zmdi eye"></i>8 times</span>
+                          <i class="zmdi eye"></i>{{item.times}} times</span>
                         <span class="duration">
-                          <i class="zmdi"></i>4:32h</span>
+                          <i class="zmdi"></i>{{item.hour}}h</span>
+                      </p>
+                      <p class="desc">{{item.desc}}</p>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col1">
+            <h2 class="temp_h2" align="center">
+              <em>会</em>
+              <em>员</em>
+              <em>专</em>
+              <em>区</em>
+            </h2>
+            <div class="recommend">
+              <ul>
+                <li v-for="item in recommendList" :key="item.id" @click="videoClick(item.video,item.times,index,item.id,item.tit)">
+                  <a>
+                    <div class="img1">
+                      <img :src="item.src" class="image1" align="center" />
+                      <p class="tit">{{item.tit}}</p>
+                      <p class="desc">
+                        <span class="lessons">
+                          <i class="zmdi eye"></i>{{item.times}} times</span>
+                        <span class="duration">
+                          <i class="zmdi"></i>{{item.hour}}h</span>
                       </p>
                       <p class="desc">{{item.desc}}</p>
                     </div>
@@ -490,6 +527,27 @@
           </li>
         </ul>
       </div>
+      <el-dialog title="个人信息" :visible.sync="dialogVisible" width="450px">
+        <el-form ref="form" :model="form" label-width="80px">
+          <el-form-item label="姓名">
+            <el-input v-model="form.name"></el-input>
+          </el-form-item>
+          <el-form-item label="性别">
+            <el-radio-group v-model="form.sex">
+              <el-radio label="boy"></el-radio>
+              <el-radio label="girl"></el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="个性签名">
+            <el-input type="textarea" v-model="form.description"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="confirmFn">确认</el-button>
+            <el-button @click="cancelFn">取消</el-button>
+          </el-form-item>
+        </el-form>
+      </el-dialog>
+
       <!-- 遮罩层 -->
       <div class="cover"></div>
       <div class="footer1">

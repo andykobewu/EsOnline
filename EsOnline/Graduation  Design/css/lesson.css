@@ -63,9 +63,14 @@
  padding-bottom: 50px
 }
 .lessonul li {
+ margin-left: 25px;
+ float: left;
  width: 250px;
+ cursor: pointer;
 }
 
 .pagecount {
+ padding-top: 5px;
+ clear: both;
  margin-top: 20px;
 }
